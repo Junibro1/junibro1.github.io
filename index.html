@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sungjune Park — Sejong RCV</title>
+<meta name="description" content="Sungjune Park (박성준) — MS/PhD student at Sejong University RCV Lab. Video understanding and computer vision." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#FAFAF8; --surface:#FFFFFF;
+    --ink:#111417; --muted:#67707A;
+    --line:#E8E8E3; --accent:#2B4BE0; --accent-ink:#1E36A8;
+    --serif:'Newsreader',Georgia,serif;
+    --sans:'Inter',system-ui,sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0F1114; --surface:#15181C;
+      --ink:#ECEDE9; --muted:#8C939C;
+      --line:#25282D; --accent:#8A9BFF; --accent-ink:#AAB6FF;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.7;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  ::selection{background:var(--accent);color:#fff}
+  a{color:inherit;text-decoration:none}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+  .wrap{max-width:1020px;margin:0 auto;padding:0 28px}
+
+  /* ---- playback progress (signature) ---- */
+  .timeline{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;z-index:60}
+  .timeline .fill{height:100%;width:0%;background:var(--accent);position:relative}
+  .timeline .fill::after{content:"";position:absolute;right:-4px;top:50%;transform:translateY(-50%);width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--bg)}
+
+  /* ---- nav ---- */
+  nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .wrap{height:58px;display:flex;align-items:center;justify-content:space-between}
+  .brand{font-family:var(--serif);font-size:17px;font-weight:500;letter-spacing:.01em}
+  nav ul{display:flex;gap:26px;list-style:none}
+  nav ul a{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;color:var(--muted);text-transform:lowercase;transition:color .15s}
+  nav ul a:hover{color:var(--ink)}
+
+  /* ---- hero ---- */
+  header{padding:104px 0 96px}
+  .hero{display:grid;grid-template-columns:1fr 264px;gap:72px;align-items:center}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:22px;display:flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:22px;height:1px;background:var(--accent)}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(44px,6.4vw,68px);line-height:1.04;letter-spacing:-.015em}
+  h1 .kr{font-size:.42em;color:var(--muted);font-weight:400;margin-left:.35em;letter-spacing:0}
+  .bio{margin-top:30px;max-width:560px;font-size:16.5px;color:var(--ink)}
+  .bio p+p{margin-top:14px}
+  .bio em{font-family:var(--serif);font-style:italic;font-size:1.09em;color:var(--accent-ink)}
+  .bio a{border-bottom:1px solid var(--line);transition:border-color .15s}
+  .bio a:hover{border-color:var(--accent)}
+  .links{margin-top:36px;display:flex;flex-wrap:wrap;gap:26px}
+  .links a{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--ink);position:relative;padding-bottom:2px}
+  .links a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--line);transition:background .2s}
+  .links a:hover::after{background:var(--accent)}
+  .links a span{color:var(--muted);margin-left:5px;font-size:11px}
+
+  /* portrait as a paused frame */
+  .portrait{justify-self:end}
+  .portrait figure{margin:0}
+  .portrait img{display:block;width:264px;height:300px;object-fit:cover;border-radius:4px;filter:grayscale(28%) contrast(1.02);transition:filter .45s ease}
+  .portrait:hover img{filter:grayscale(0%)}
+
+  /* ---- sections as chapters ---- */
+  section{border-top:1px solid var(--line);padding:76px 0}
+  .sec{display:grid;grid-template-columns:196px 1fr;gap:56px}
+  .chapter{position:sticky;top:86px;align-self:start}
+  .chapter h2{font-family:var(--serif);font-weight:500;font-size:23px;letter-spacing:-.01em;line-height:1.2}
+
+  /* news */
+  .news{list-style:none}
+  .news li{display:flex;gap:26px;padding:13px 0;border-bottom:1px solid var(--line)}
+  .news li:last-child{border-bottom:0}
+  .news time{font-family:var(--mono);font-size:11.5px;color:var(--muted);flex-shrink:0;min-width:70px;padding-top:4px}
+  .news a{color:var(--accent-ink);border-bottom:1px solid transparent}
+  .news a:hover{border-color:var(--accent)}
+  .news b{font-weight:600}
+
+  /* publications */
+  .pub{padding:26px 0;border-bottom:1px solid var(--line)}
+  .pub:first-child{padding-top:4px}
+  .pub:last-child{border-bottom:0}
+  .pub .venue{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 38%,transparent);border-radius:99px;padding:3px 11px;display:inline-block;margin-bottom:14px}
+  .pub .venue.dom{color:var(--muted);border-color:var(--line)}
+  .pub h3{font-family:var(--serif);font-weight:500;font-size:24px;line-height:1.28;letter-spacing:-.01em;max-width:600px}
+  .pub h3 a{background-image:linear-gradient(var(--accent),var(--accent));background-size:0% 1px;background-repeat:no-repeat;background-position:0 96%;transition:background-size .3s ease}
+  .pub h3 a:hover{background-size:100% 1px}
+  .pub .authors{margin-top:10px;font-size:14px;color:var(--muted);max-width:600px}
+  .pub .authors b{color:var(--ink);font-weight:600}
+  .pub .pub-links{margin-top:14px;display:flex;gap:22px}
+  .pub .pub-links a{font-family:var(--mono);font-size:11.5px;color:var(--ink);letter-spacing:.03em}
+  .pub .pub-links a::after{content:" ↗";color:var(--accent)}
+  .pub .pub-links a:hover{color:var(--accent-ink)}
+
+  /* items (projects / education) */
+  .item{display:grid;grid-template-columns:172px 1fr;gap:26px;padding:17px 0;border-bottom:1px solid var(--line)}
+  .item:last-child{border-bottom:0}
+  .item time{font-family:var(--mono);font-size:11.5px;color:var(--muted);padding-top:4px}
+  .item .t{font-weight:600;font-size:15.5px}
+  .item .d{color:var(--muted);font-size:13.5px;margin-top:3px}
+
+  /* contact */
+  .contact-line{font-size:16px;line-height:1.7;max-width:560px}
+  .contact-line a{color:var(--accent-ink);background-image:linear-gradient(var(--accent),var(--accent));background-size:100% 1px;background-repeat:no-repeat;background-position:0 94%}
+
+  footer{border-top:1px solid var(--line);padding:34px 0 56px}
+  footer .wrap{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px}
+  footer span,footer a{font-family:var(--mono);font-size:12px;font-weight:400;letter-spacing:.08em;color:var(--muted);line-height:1}
+  footer a:hover{color:var(--ink)}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    *{transition:none!important}
+  }
+
+  @media (max-width:840px){
+    header{padding:64px 0 64px}
+    .hero{grid-template-columns:1fr;gap:44px}
+    .portrait{justify-self:start;order:-1}
+    .portrait img{width:200px;height:228px}
+    .sec{grid-template-columns:1fr;gap:26px}
+    .chapter{position:static}
+    section{padding:56px 0}
+    .item{grid-template-columns:1fr;gap:3px}
+    nav ul{gap:16px}
+    nav ul li:nth-child(n+4){display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="timeline" aria-hidden="true"><div class="fill" id="fill"></div></div>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top">Sungjune Park</a>
+    <ul>
+      <li><a href="#news">news</a></li>
+      <li><a href="#publications">publications</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#education">education</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header id="top">
+  <div class="wrap hero">
+    <div>
+      <p class="eyebrow">Sejong University · RCV Lab</p>
+      <h1>Sungjune Park<span class="kr">박성준</span></h1>
+      <div class="bio">
+        <p>I am an MS/PhD student at Sejong University, working with the CVML team at the <a href="https://www.rcv.sejong.ac.kr/home">Robotics and Computer Vision Lab</a>, advised by Prof. Yukyung Choi.</p>
+        <p>My research asks how machines can truly <em>understand video</em> — perceiving, retrieving, and reasoning over time — spanning multimodal learning and open-vocabulary detection.</p>
+      </div>
+      <div class="links">
+        <a href="mailto:sjpark@rcv.sejong.ac.kr">email<span>↗</span></a>
+        <a href="https://github.com/Junibro1">github<span>↗</span></a>
+        <a href="https://www.linkedin.com/in/sjpark1125">linkedin<span>↗</span></a>
+        <!-- <a href="https://scholar.google.com/">scholar<span>↗</span></a> -->
+        <!-- <a href="cv.pdf">cv<span>↗</span></a> -->
+      </div>
+    </div>
+    <div class="portrait">
+      <figure>
+        <!-- 사진 교체: images/profile.jpg 업로드 후 src 수정 -->
+        <img src="https://avatars.githubusercontent.com/u/104000436?v=4" alt="Portrait of Sungjune Park" />
+      </figure>
+    </div>
+  </div>
+</header>
+
+<section id="news">
+  <div class="wrap sec reveal">
+    <div class="chapter"><h2>News</h2></div>
+    <ul class="news">
+      <li><time>2026.07</time><span><b>Video-Oasis</b>, our work rethinking how video understanding is evaluated, is out — see the <a href="https://arxiv.org/abs/2603.29616">arXiv preprint</a> and <a href="https://github.com/LimGeunTaekk/Video-Oasis">project page</a>.</span></li>
+      <li><time>2026.02</time><span>Our paper on fine-grained open-vocabulary detection was presented at <b>KRoC 2026</b>.</span></li>
+      <li><time>2025.03</time><span>Started the MS/PhD program at Sejong University RCV Lab.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="wrap sec reveal">
+    <div class="chapter"><h2>Publications</h2></div>
+    <div>
+      <div class="pub">
+        <span class="venue">ECCV 2026</span>
+        <h3><a href="https://arxiv.org/abs/2603.29616">Video-Oasis: Rethinking Evaluation of Video Understanding</a></h3>
+        <p class="authors">Geuntaek Lim, <b>Sungjune Park</b>, Jaeyun Lee, Inwoong Lee, Taeoh Kim, Dongyoon Wee, Minho Shim, Yukyung Choi</p>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2603.29616">arXiv</a>
+          <a href="https://github.com/LimGeunTaekk/Video-Oasis">project page</a>
+        </div>
+      </div>
+      <div class="pub">
+        <span class="venue dom">KRoC 2026</span>
+        <h3>Post-processing Method Comparison for Fine-Grained Open-Vocabulary Object Detection with P2R Framework</h3>
+        <p class="authors">In Taek Shin, Hyunwoo Kim, <b>Sungjune Park</b>, Yukyung Choi</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap sec reveal">
+    <div class="chapter"><h2>Projects</h2></div>
+    <div>
+      <div class="item">
+        <time>2024.02 — present</time>
+        <div>
+          <p class="t">AI Solution Technology with Smart Vision</p>
+          <p class="d">스마트 비전 활용 AI 솔루션 기술 개발</p>
+        </div>
+      </div>
+      <div class="item">
+        <time>2023.04 — 2024.07</time>
+        <div>
+          <p class="t">Multimodal AI-based Multi-purpose Video Retrieval System</p>
+          <p class="d">멀티모달 AI 기반의 다목적 비디오 검색 시스템 개발</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap sec reveal">
+    <div class="chapter"><h2>Education</h2></div>
+    <div>
+      <div class="item">
+        <time>2025.03 — present</time>
+        <div>
+          <p class="t">MS/PhD, Intelligent Mechatronics Engineering · Sejong University</p>
+          <p class="d">Robotics and Computer Vision Lab (RCV), CVML Team · Advisor: Prof. Yukyung Choi</p>
+        </div>
+      </div>
+      <div class="item">
+        <time>2023.07 — 2025.02</time>
+        <div>
+          <p class="t">Undergraduate Research Program · RCV Lab, Sejong University</p>
+          <p class="d">1.6 years of research participation</p>
+        </div>
+      </div>
+      <div class="item">
+        <time>2019.03 — 2025.02</time>
+        <div>
+          <p class="t">BS, Computer Science · Sejong University</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap sec reveal">
+    <div class="chapter"><h2>Contact</h2></div>
+    <p class="contact-line">Always glad to talk about video understanding, multimodal learning, or collaboration — reach me at <a href="mailto:sjpark@rcv.sejong.ac.kr">sjpark@rcv.sejong.ac.kr</a>.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 SUNGJUNE PARK</span>
+    <a href="https://github.com/Junibro1/junibro1.github.io">SOURCE &nearr;</a>
+  </div>
+</footer>
+
+<script>
+  // playback-style scroll progress
+  const fill = document.getElementById('fill');
+  const onScroll = () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    fill.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+  };
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // chapter reveal
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold: 0.12});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
