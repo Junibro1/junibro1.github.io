@@ -85,12 +85,21 @@
   .news b{font-weight:600}
 
   /* publications */
-  .pub{padding:26px 0;border-bottom:1px solid var(--line)}
+  .pub{display:grid;grid-template-columns:184px 1fr;gap:28px;align-items:start;padding:26px 0;border-bottom:1px solid var(--line)}
   .pub:first-child{padding-top:4px}
   .pub:last-child{border-bottom:0}
+  /* preview as a paused frame, like the portrait */
+  .pub .thumb{display:block;width:184px;aspect-ratio:16/10;border-radius:4px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+  .pub .thumb img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(28%) contrast(1.02);transition:filter .45s ease}
+  .pub:hover .thumb img{filter:grayscale(0%)}
+  .pub .thumb-empty{border:0;background:transparent}
+  @media (prefers-color-scheme:dark){
+    .pub .thumb img{filter:grayscale(28%) brightness(.9)}
+    .pub:hover .thumb img{filter:none}
+  }
   .pub .venue{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 38%,transparent);border-radius:99px;padding:3px 11px;display:inline-block;margin-bottom:14px}
   .pub .venue.dom{color:var(--muted);border-color:var(--line)}
-  .pub h3{font-family:var(--serif);font-weight:500;font-size:24px;line-height:1.28;letter-spacing:-.01em;max-width:600px}
+  .pub h3{font-family:var(--serif);font-weight:500;font-size:22px;line-height:1.3;letter-spacing:-.01em;max-width:600px}
   .pub h3 a{background-image:linear-gradient(var(--accent),var(--accent));background-size:0% 1px;background-repeat:no-repeat;background-position:0 96%;transition:background-size .3s ease}
   .pub h3 a:hover{background-size:100% 1px}
   .pub .authors{margin-top:10px;font-size:14px;color:var(--muted);max-width:600px}
@@ -134,6 +143,9 @@
     .chapter{position:static}
     section{padding:56px 0}
     .item{grid-template-columns:1fr;gap:3px}
+    .pub{grid-template-columns:1fr;gap:16px}
+    .pub .thumb{width:min(100%,320px)}
+    .pub .thumb-empty{display:none}
     nav ul{gap:16px}
     nav ul li:nth-child(n+4){display:none}
   }
@@ -185,6 +197,7 @@
   <div class="wrap sec reveal">
     <div class="chapter"><h2>News</h2></div>
     <ul class="news">
+      <li><time>2026.10</time><span><b>ST-Pruner</b>, our work on pruning visual tokens before the LLM, is accepted to <b>WACV 2027</b> — see the <a href="https://arxiv.org/abs/2610.38303">arXiv preprint</a> and <a href="https://github.com/sejong-rcv/ST-Pruner">code</a>.</span></li>
       <li><time>2026.07</time><span><b>Video-Oasis</b>, our work rethinking how video understanding is evaluated, is out — see the <a href="https://arxiv.org/abs/2603.29616">arXiv preprint</a> and <a href="https://github.com/LimGeunTaekk/Video-Oasis">project page</a>.</span></li>
       <li><time>2026.02</time><span>Our paper on fine-grained open-vocabulary detection was presented at <b>KRoC 2026</b>.</span></li>
       <li><time>2025.03</time><span>Started the MS/PhD program at Sejong University RCV Lab.</span></li>
@@ -197,18 +210,40 @@
     <div class="chapter"><h2>Publications</h2></div>
     <div>
       <div class="pub">
-        <span class="venue">ECCV 2026</span>
-        <h3><a href="https://arxiv.org/abs/2603.29616">Video-Oasis: Rethinking Evaluation of Video Understanding</a></h3>
-        <p class="authors">Geuntaek Lim, <b>Sungjune Park</b>, Jaeyun Lee, Inwoong Lee, Taeoh Kim, Dongyoon Wee, Minho Shim, Yukyung Choi</p>
-        <div class="pub-links">
-          <a href="https://arxiv.org/abs/2603.29616">arXiv</a>
-          <a href="https://limgeuntaekk.github.io/Video-Oasis/">project page</a>
+        <a class="thumb" href="https://arxiv.org/abs/2610.38303" aria-hidden="true" tabindex="-1">
+          <img src="images/st-pruner.png" alt="" loading="lazy" />
+        </a>
+        <div>
+          <span class="venue">WACV 2027</span>
+          <h3><a href="https://arxiv.org/abs/2610.38303">Don’t Ask the LLM: Visual Token Pruning with Spectral Structure and Semantic Relevance</a></h3>
+          <p class="authors">Intaek Shin, Geuntaek Lim, <b>Sungjune Park</b>, Yukyung Choi</p>
+          <div class="pub-links">
+            <a href="https://arxiv.org/abs/2610.38303">arXiv</a>
+            <a href="https://github.com/sejong-rcv/ST-Pruner">code</a>
+          </div>
         </div>
       </div>
       <div class="pub">
-        <span class="venue dom">KRoC 2026</span>
-        <h3>Post-processing Method Comparison for Fine-Grained Open-Vocabulary Object Detection with P2R Framework</h3>
-        <p class="authors">In Taek Shin, Hyunwoo Kim, <b>Sungjune Park</b>, Yukyung Choi</p>
+        <a class="thumb" href="https://limgeuntaekk.github.io/Video-Oasis/" aria-hidden="true" tabindex="-1">
+          <img src="images/video-oasis.jpg" alt="" loading="lazy" />
+        </a>
+        <div>
+          <span class="venue">ECCV 2026</span>
+          <h3><a href="https://arxiv.org/abs/2603.29616">Video-Oasis: Rethinking Evaluation of Video Understanding</a></h3>
+          <p class="authors">Geuntaek Lim, <b>Sungjune Park</b>, Jaeyun Lee, Inwoong Lee, Taeoh Kim, Dongyoon Wee, Minho Shim, Yukyung Choi</p>
+          <div class="pub-links">
+            <a href="https://arxiv.org/abs/2603.29616">arXiv</a>
+            <a href="https://limgeuntaekk.github.io/Video-Oasis/">project page</a>
+          </div>
+        </div>
+      </div>
+      <div class="pub">
+        <div class="thumb thumb-empty" aria-hidden="true"></div>
+        <div>
+          <span class="venue dom">KRoC 2026</span>
+          <h3>Post-processing Method Comparison for Fine-Grained Open-Vocabulary Object Detection with P2R Framework</h3>
+          <p class="authors">In Taek Shin, Hyunwoo Kim, <b>Sungjune Park</b>, Yukyung Choi</p>
+        </div>
       </div>
     </div>
   </div>
